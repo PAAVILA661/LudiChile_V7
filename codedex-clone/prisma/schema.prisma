@@ -1,0 +1,140 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Definición del Enum para Roles
+enum UserRole {
+  STUDENT
+  ADMIN
+}
+
+model User {
+  id            String        @id @default(cuid())
+  name          String?
+  email         String        @unique
+  password_hash String
+  github_id     String?       @unique
+  role          UserRole      @default(STUDENT) // Nuevo campo para el rol, por defecto STUDENT
+  created_at    DateTime      @default(now())
+  updated_at    DateTime      @updatedAt
+  progress      UserProgress[]
+  user_badges   UserBadge[]
+  user_xp       UserXP?       // Un usuario puede tener o no XP, por eso es opcional y la relación es UserXP?
+}
+
+model Course {
+  id          String    @id @default(cuid())
+  title       String    @unique
+  slug        String    @unique
+  description String?
+  image_url   String?
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
+  chapters    Chapter[]
+}
+
+model Chapter {
+  id          String     @id @default(cuid())
+  course_id   String
+  title       String
+  slug        String     @unique
+  description String?
+  order       Int
+  created_at  DateTime   @default(now())
+  updated_at  DateTime   @updatedAt
+  course      Course     @relation(fields: [course_id], references: [id])
+  exercises   Exercise[]
+}
+
+model Exercise {
+  id               String         @id @default(cuid())
+  chapter_id       String
+  title            String
+  slug             String         @unique
+  description      String?
+  instructions     String?
+  initial_code     String?
+  expected_output  String?
+  xp_value         Int            @default(0)
+  order            Int
+  created_at       DateTime       @default(now())
+  updated_at       DateTime       @updatedAt
+  chapter          Chapter        @relation(fields: [chapter_id], references: [id])
+  user_progress    UserProgress[]
+}
+
+model UserProgress {
+  user_id      String
+  exercise_id  String
+  submitted_code String?
+  status       ProgressStatus @default(PENDING)
+  completed_at DateTime?      @updatedAt // Se actualiza cuando se completa
+  updated_at   DateTime       @updatedAt
+  user         User           @relation(fields: [user_id], references: [id])
+  exercise     Exercise       @relation(fields: [exercise_id], references: [id])
+
+  @@id([user_id, exercise_id]) // Clave primaria compuesta
+}
+
+model Badge {
+  id                   String      @id @default(cuid())
+  name                 String      @unique
+  description          String?
+  image_url            String?
+  criteria_description String?
+  user_badges          UserBadge[]
+}
+
+model UserBadge {
+  user_id   String
+  badge_id  String
+  earned_at DateTime @default(now())
+  user      User     @relation(fields: [user_id], references: [id])
+  badge     Badge    @relation(fields: [badge_id], references: [id])
+
+  @@id([user_id, badge_id]) // Clave primaria compuesta
+}
+
+model UserXP {
+  user_id  String   @id @unique // user_id es tanto PK como FK
+  total_xp Int      @default(0)
+  updated_at DateTime @updatedAt
+  user    User     @relation(fields: [user_id], references: [id])
+}
+
+enum ProgressStatus {
+  PENDING
+  ATTEMPTED
+  COMPLETED
+}
+
+model StaticPage {
+  id         String    @id @default(cuid())
+  slug       String    @unique // ej: "about", "terms", "privacy", "faq"
+  title      String    // Título de la página para el admin y metadatos
+  content    String    // Contenido de la página, probablemente Markdown
+  updated_at DateTime  @updatedAt
+  created_at DateTime  @default(now())
+}
+
+model Setting {
+  id         String    @id @default(cuid())
+  key        String    @unique // ej: "siteName", "siteLogoUrl", "maintenanceMode"
+  value      String    // El valor de la configuración, podría ser JSON string si es complejo
+  label      String?   // Un nombre legible para mostrar en el UI de admin
+  type       String    @default("text") // Ayuda para el UI: "text", "boolean", "textarea", "number"
+  group      String?   // Para agrupar configuraciones en el UI, ej: "General", "Appearance", "Integrations"
+  updated_at DateTime  @updatedAt
+  created_at DateTime  @default(now())
+}

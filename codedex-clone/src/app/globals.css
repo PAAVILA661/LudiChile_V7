@@ -1,0 +1,190 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom Font Imports */
+@font-face {
+  font-family: 'PixelGrid';
+  src: url('/fonts/pixelgrid-squareboldm.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PixelGrid';
+  src: url('/fonts/pixelgrid-squareboldxl.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Hack';
+  src: url('/fonts/Hack-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PressStart2P';
+  src: url('https://fonts.gstatic.com/s/pressstart2p/v14/e3t4euO8T-267oIAQAu6jDQyK3nVivM.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@layer base {
+  :root {
+    /* Updated to use Codedex dark theme by default */
+    --background: 230 100% 4%;  /* #07091c */
+    --foreground: 60 27% 85%;   /* #d6d6bb */
+
+    --card: 230 53% 14%;
+    --card-foreground: 210 20% 98%;
+
+    --popover: 224 71.4% 4.1%;
+    --popover-foreground: 210 20% 98%;
+
+    --primary: 60 27% 85%;      /* Gold */
+    --primary-foreground: 230 100% 4%;
+
+    --secondary: 174 50% 45%;   /* Teal */
+    --secondary-foreground: 210 20% 98%;
+
+    --muted: 220 14.3% 95.9%;
+    --muted-foreground: 220 8.9% 46.1%;
+
+    --accent: 270 60% 45%;      /* Purple */
+    --accent-foreground: 210 20% 98%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 20% 98%;
+
+    --border: 215 27.9% 16.9%;
+    --input: 215 27.9% 16.9%;
+    --ring: 262.1 83.3% 57.8%;
+
+    --radius: 0.5rem;
+
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+  }
+
+  .light {
+    --background: 0 0% 100%;
+    --foreground: 224 71.4% 4.1%;
+    --card: 0 0% 100%;
+    --card-foreground: 224 71.4% 4.1%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 224 71.4% 4.1%;
+    --primary: 262.1 83.3% 57.8%;
+    --primary-foreground: 210 20% 98%;
+    --secondary: 220 14.3% 95.9%;
+    --secondary-foreground: 220.9 39.3% 11%;
+    --muted: 220 14.3% 95.9%;
+    --muted-foreground: 220 8.9% 46.1%;
+    --accent: 220 14.3% 95.9%;
+    --accent-foreground: 220.9 39.3% 11%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 20% 98%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 262.1 83.3% 57.8%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
+
+  .dark {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 240 5.9% 10%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 240 4.9% 83.9%;
+
+    --chart-1: 240 2% 84%;
+    --chart-2: 240 2% 62%;
+    --chart-3: 240 2% 45%;
+    --chart-4: 240 2% 32%;
+    --chart-5: 240 2% 24%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  h1, h2, h3, h4 {
+    font-family: 'PixelGrid', 'PressStart2P', monospace;
+  }
+  code {
+    font-family: 'Hack', 'Menlo', monospace;
+  }
+}
+
+@layer components {
+  .codedex-container {
+    @apply container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  .pixel-border {
+    image-rendering: pixelated;
+    border-style: solid;
+    border-width: 4px;
+    border-image-slice: 4;
+    border-image-width: 2px;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-source: url('data:image/svg+xml,%3Csvg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg"%3E%3Cg clip-path="url(%23clip0_1310_2574)"%3E%3Cpath fill-rule="evenodd" clip-rule="evenodd" d="M0 0H8V8H0V0Z" fill="%23d6d6bb"%2F%3E%3Cpath fill-rule="evenodd" clip-rule="evenodd" d="M1 1H7V7H1V1Z" fill="%2307091c"%2F%3E%3C%2Fg%3E%3Cdefs%3E%3CclipPath id="clip0_1310_2574"%3E%3Crect width="8" height="8" fill="white"%2F%3E%3C%2FclipPath%3E%3C%2Fdefs%3E%3C%2Fsvg%3E');
+  }
+
+  .font-pixel {
+    font-family: 'PixelGrid', monospace;
+  }
+
+  .font-code {
+    font-family: 'Hack', monospace;
+  }
+
+  .animate-pulse-slow {
+    animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .code-editor {
+    font-family: 'Hack', Menlo, Monaco, 'Courier New', monospace;
+    background-color: #001429;
+    color: #e2e8f0;
+    border-radius: 0.25rem;
+    tab-size: 2;
+  }
+
+  .course-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+}

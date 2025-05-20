@@ -1,0 +1,34 @@
+# Ignorar directorios de dependencias
+node_modules/
+codedex-clone/node_modules/
+python-ejercicios/node_modules/
+
+# Ignorar archivos de sistema
+.DS_Store
+
+# Ignorar directorios de compilación/salida
+output/
+codedex-clone/output/
+python-ejercicios/dist/ # Asumiendo que python-ejercicios usa 'dist' para la salida
+
+# Ignorar archivos de entorno local
+.env.local
+codedex-clone/.env.local
+python-ejercicios/.env.local
+
+# Ignorar archivos de caché y temporales
+.next/
+codedex-clone/.next/
+python-ejercicios/.vite/
+*.tsbuildinfo
+
+# Ignorar archivos específicos de IDEs (opcional, pero común)
+.vscode/
+
+# Ignorar archivos de lock específicos si no se usan consistentemente (ej. si se usa npm/yarn en lugar de bun)
+bun.lock
+codedex-clone/bun.lock
+python-ejercicios/bun.lock
+
+# Ignorar archivos de log
+*.log
