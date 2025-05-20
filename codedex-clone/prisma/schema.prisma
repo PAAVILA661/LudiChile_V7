@@ -30,7 +30,7 @@ model User {
   updated_at    DateTime      @updatedAt
   progress      UserProgress[]
   user_badges   UserBadge[]
-  user_xp       UserXP?       // Un usuario puede tener o no XP, por eso es opcional y la relación es UserXP?
+  user_xp       UserXP?
 }
 
 model Course {
@@ -53,7 +53,7 @@ model Chapter {
   order       Int
   created_at  DateTime   @default(now())
   updated_at  DateTime   @updatedAt
-  course      Course     @relation(fields: [course_id], references: [id])
+  course      Course     @relation(fields: [course_id], references: [id], onDelete: Cascade)
   exercises   Exercise[]
 }
 
@@ -70,7 +70,7 @@ model Exercise {
   order            Int
   created_at       DateTime       @default(now())
   updated_at       DateTime       @updatedAt
-  chapter          Chapter        @relation(fields: [chapter_id], references: [id])
+  chapter          Chapter        @relation(fields: [chapter_id], references: [id], onDelete: Cascade)
   user_progress    UserProgress[]
 }
 
@@ -81,7 +81,7 @@ model UserProgress {
   status       ProgressStatus @default(PENDING)
   completed_at DateTime?      @updatedAt // Se actualiza cuando se completa
   updated_at   DateTime       @updatedAt
-  user         User           @relation(fields: [user_id], references: [id])
+  user         User           @relation(fields: [user_id], references: [id], onDelete: Cascade)
   exercise     Exercise       @relation(fields: [exercise_id], references: [id])
 
   @@id([user_id, exercise_id]) // Clave primaria compuesta
@@ -100,7 +100,7 @@ model UserBadge {
   user_id   String
   badge_id  String
   earned_at DateTime @default(now())
-  user      User     @relation(fields: [user_id], references: [id])
+  user      User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
   badge     Badge    @relation(fields: [badge_id], references: [id])
 
   @@id([user_id, badge_id]) // Clave primaria compuesta
@@ -110,7 +110,7 @@ model UserXP {
   user_id  String   @id @unique // user_id es tanto PK como FK
   total_xp Int      @default(0)
   updated_at DateTime @updatedAt
-  user    User     @relation(fields: [user_id], references: [id])
+  user    User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
 }
 
 enum ProgressStatus {

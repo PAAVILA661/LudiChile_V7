@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { ChevronLeft, ChevronRight, Play, Square, Copy } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
+import { ChevronLeft, ChevronRight, Play, Square, Copy } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface ExerciseData {
   number: number;
@@ -21,9 +21,12 @@ interface ExerciseClientProps {
   exerciseSlug: string;
 }
 
-const ExerciseClient = ({ exerciseData, exerciseSlug }: ExerciseClientProps) => {
-  const [code, setCode] = useState('');
-  const [output, setOutput] = useState('');
+const ExerciseClient = ({
+  exerciseData,
+  exerciseSlug,
+}: ExerciseClientProps) => {
+  const [code, setCode] = useState("");
+  const [output, setOutput] = useState("");
   const [isRunning, setIsRunning] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
 
@@ -35,66 +38,80 @@ const ExerciseClient = ({ exerciseData, exerciseSlug }: ExerciseClientProps) => 
 
   const handleRunCode = () => {
     setIsRunning(true);
-    setOutput('');
+    setOutput("");
 
     // Simulate code execution with a delay
     setTimeout(() => {
       try {
         // Simple evaluation logic for each exercise
-        if (exerciseSlug === '01-setting-up') {
+        if (exerciseSlug === "01-setting-up") {
           if (code.includes("print('Hi')") || code.includes('print("Hi")')) {
-            setOutput('Hi');
+            setOutput("Hi");
             setIsCorrect(true);
           } else {
-            setOutput('Your code didn\'t produce the expected output. Try again!');
+            setOutput(
+              "Your code didn't produce the expected output. Try again!",
+            );
             setIsCorrect(false);
           }
-        } else if (exerciseSlug === '02-hello-world') {
-          if (code.includes("print('Hello, World!')") || code.includes('print("Hello, World!")')) {
-            setOutput('Hello, World!');
+        } else if (exerciseSlug === "02-hello-world") {
+          if (
+            code.includes("print('Hello, World!')") ||
+            code.includes('print("Hello, World!")')
+          ) {
+            setOutput("Hello, World!");
             setIsCorrect(true);
           } else {
-            setOutput('Your code didn\'t produce the expected output. Try printing "Hello, World!"');
+            setOutput(
+              'Your code didn\'t produce the expected output. Try printing "Hello, World!"',
+            );
             setIsCorrect(false);
           }
-        } else if (exerciseSlug === '03-pattern') {
-          const expectedPattern = ['*', '**', '***'].join('\n');
+        } else if (exerciseSlug === "03-pattern") {
+          const expectedPattern = ["*", "**", "***"].join("\n");
           // Check if asterisks pattern is in the code
           const asteriskCount = (code.match(/\*/g) || []).length;
           const printCount = (code.match(/print/g) || []).length;
 
           if (asteriskCount >= 6 && printCount >= 3) {
-            setOutput('*\n**\n***');
+            setOutput("*\n**\n***");
             setIsCorrect(true);
           } else {
-            setOutput('Your pattern doesn\'t match what was expected. Try using three print() statements with asterisks.');
+            setOutput(
+              "Your pattern doesn't match what was expected. Try using three print() statements with asterisks.",
+            );
             setIsCorrect(false);
           }
-        } else if (exerciseSlug === '04-initials') {
+        } else if (exerciseSlug === "04-initials") {
           // For initials, we just check that they've used multiple print statements
           const printCount = (code.match(/print/g) || []).length;
           if (printCount >= 3) {
             // Extract and display the actual output
-            const lines = code.split('\n')
-              .filter(line => line.trim().startsWith('print'))
-              .map(line => {
+            const lines = code
+              .split("\n")
+              .filter((line) => line.trim().startsWith("print"))
+              .map((line) => {
                 const match = line.match(/print\(['"](.*)["']\)/);
-                return match ? match[1] : '';
+                return match ? match[1] : "";
               })
-              .join('\n');
+              .join("\n");
 
-            setOutput(lines || 'Your ASCII art is displayed here!');
+            setOutput(lines || "Your ASCII art is displayed here!");
             setIsCorrect(true);
           } else {
-            setOutput('Try using multiple print statements to create your ASCII art initials.');
+            setOutput(
+              "Try using multiple print statements to create your ASCII art initials.",
+            );
             setIsCorrect(false);
           }
         } else {
-          setOutput('Exercise not fully implemented yet. Stay tuned!');
+          setOutput("Exercise not fully implemented yet. Stay tuned!");
           setIsCorrect(false);
         }
       } catch (error) {
-        setOutput(`Error: ${error instanceof Error ? error.message : 'Unknown error'}`);
+        setOutput(
+          `Error: ${error instanceof Error ? error.message : "Unknown error"}`,
+        );
         setIsCorrect(false);
       }
 
@@ -104,15 +121,19 @@ const ExerciseClient = ({ exerciseData, exerciseSlug }: ExerciseClientProps) => 
 
   const handleCheckAnswer = () => {
     if (isCorrect) {
-      alert('Great job! Your solution is correct. You can move on to the next exercise.');
+      alert(
+        "Great job! Your solution is correct. You can move on to the next exercise.",
+      );
     } else {
-      alert('Your solution isn\'t quite right. Please try again and check the instructions.');
+      alert(
+        "Your solution isn't quite right. Please try again and check the instructions.",
+      );
     }
   };
 
   const handleCopyCode = () => {
     navigator.clipboard.writeText(code);
-    alert('Code copied to clipboard!');
+    alert("Code copied to clipboard!");
   };
 
   return (
@@ -120,7 +141,10 @@ const ExerciseClient = ({ exerciseData, exerciseSlug }: ExerciseClientProps) => 
       <div className="border-b border-codedex-gold/10">
         <div className="codedex-container py-4 flex items-center justify-between">
           <div className="flex items-center">
-            <Link href="/python" className="text-codedex-gold hover:text-white mr-2">
+            <Link
+              href="/python"
+              className="text-codedex-gold hover:text-white mr-2"
+            >
               <ChevronLeft size={20} />
             </Link>
             <span className="text-white font-medium">
@@ -143,17 +167,23 @@ const ExerciseClient = ({ exerciseData, exerciseSlug }: ExerciseClientProps) => 
             </h1>
 
             <div className="text-gray-300 space-y-4">
-              <div className="whitespace-pre-line">{exerciseData.description}</div>
+              <div className="whitespace-pre-line">
+                {exerciseData.description}
+              </div>
 
               <div className="mt-8">
-                <h2 className="font-pixel text-white text-xl mb-2">Instructions</h2>
+                <h2 className="font-pixel text-white text-xl mb-2">
+                  Instructions
+                </h2>
                 <div className="text-gray-300 whitespace-pre-line">
                   {exerciseData.instructions}
                 </div>
 
                 {exerciseData.expectedOutput && (
                   <div className="mt-6 p-4 bg-codedex-navy rounded-md border border-codedex-gold/10">
-                    <p className="text-white font-medium mb-2">Expected Output:</p>
+                    <p className="text-white font-medium mb-2">
+                      Expected Output:
+                    </p>
                     <pre className="text-gray-300 font-mono text-sm whitespace-pre">
                       {exerciseData.expectedOutput}
                     </pre>
@@ -192,7 +222,7 @@ const ExerciseClient = ({ exerciseData, exerciseSlug }: ExerciseClientProps) => 
                 disabled={isRunning}
               >
                 {isRunning ? <Square size={16} /> : <Play size={16} />}
-                {isRunning ? 'Stop' : 'Run'}
+                {isRunning ? "Stop" : "Run"}
               </Button>
 
               <Button

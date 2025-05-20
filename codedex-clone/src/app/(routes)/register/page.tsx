@@ -1,13 +1,18 @@
 "use client";
 
-import { useState } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Github } from 'lucide-react';
+import { useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Github } from "lucide-react";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -16,28 +21,28 @@ export default function RegisterPage() {
     name: "",
     email: "",
     password: "",
-    confirmPassword: ""
+    confirmPassword: "",
   });
   const [errors, setErrors] = useState({
     name: "",
     email: "",
     password: "",
-    confirmPassword: ""
+    confirmPassword: "",
   });
   const [apiError, setApiError] = useState<string | null>(null); // Para errores de la API
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
 
     // Clear error when field is being edited
     if (errors[name as keyof typeof errors]) {
-      setErrors(prev => ({
+      setErrors((prev) => ({
         ...prev,
-        [name]: ""
+        [name]: "",
       }));
     }
   };
@@ -98,10 +103,10 @@ export default function RegisterPage() {
     if (validateForm()) {
       setIsLoading(true);
       try {
-        const response = await fetch('/api/auth/register', {
-          method: 'POST',
+        const response = await fetch("/api/auth/register", {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({
             name: formData.name,
@@ -113,7 +118,7 @@ export default function RegisterPage() {
         const data = await response.json();
 
         if (!response.ok) {
-          setApiError(data.message || 'Failed to register. Please try again.');
+          setApiError(data.message || "Failed to register. Please try again.");
           setIsLoading(false);
           return;
         }
@@ -122,11 +127,10 @@ export default function RegisterPage() {
         console.log("Registration successful", data);
         // Aquí podrías, por ejemplo, redirigir al login o directamente loguear al usuario
         // Por ahora, redirigimos al login para que el usuario inicie sesión.
-        router.push('/login?registered=true'); // Añadimos un query param para mostrar un mensaje si se desea
-
+        router.push("/login?registered=true"); // Añadimos un query param para mostrar un mensaje si se desea
       } catch (error) {
         console.error("Registration request failed:", error);
-        setApiError('An unexpected error occurred. Please try again.');
+        setApiError("An unexpected error occurred. Please try again.");
       } finally {
         setIsLoading(false);
       }
@@ -147,8 +151,12 @@ export default function RegisterPage() {
               />
             </div>
           </Link>
-          <h1 className="text-3xl font-pixel text-codedex-gold">Join Codedex</h1>
-          <p className="text-gray-400 mt-2">Create your account and start coding</p>
+          <h1 className="text-3xl font-pixel text-codedex-gold">
+            Join Codedex
+          </h1>
+          <p className="text-gray-400 mt-2">
+            Create your account and start coding
+          </p>
         </div>
 
         {apiError && (
@@ -173,14 +181,21 @@ export default function RegisterPage() {
               <div className="w-full border-t border-gray-700" />
             </div>
             <div className="relative flex justify-center text-xs">
-              <span className="bg-codedex-navy px-2 text-gray-400">or continue with email</span>
+              <span className="bg-codedex-navy px-2 text-gray-400">
+                or continue with email
+              </span>
             </div>
           </div>
 
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
-                <label htmlFor="name" className="text-sm font-medium text-gray-300">Name</label>
+                <label
+                  htmlFor="name"
+                  className="text-sm font-medium text-gray-300"
+                >
+                  Name
+                </label>
                 <Input
                   id="name"
                   name="name"
@@ -190,11 +205,18 @@ export default function RegisterPage() {
                   value={formData.name}
                   onChange={handleChange}
                 />
-                {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
+                {errors.name && (
+                  <p className="text-red-500 text-xs mt-1">{errors.name}</p>
+                )}
               </div>
 
               <div className="space-y-2">
-                <label htmlFor="email" className="text-sm font-medium text-gray-300">Email</label>
+                <label
+                  htmlFor="email"
+                  className="text-sm font-medium text-gray-300"
+                >
+                  Email
+                </label>
                 <Input
                   id="email"
                   name="email"
@@ -204,11 +226,18 @@ export default function RegisterPage() {
                   value={formData.email}
                   onChange={handleChange}
                 />
-                {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
+                {errors.email && (
+                  <p className="text-red-500 text-xs mt-1">{errors.email}</p>
+                )}
               </div>
 
               <div className="space-y-2">
-                <label htmlFor="password" className="text-sm font-medium text-gray-300">Password</label>
+                <label
+                  htmlFor="password"
+                  className="text-sm font-medium text-gray-300"
+                >
+                  Password
+                </label>
                 <Input
                   id="password"
                   name="password"
@@ -218,11 +247,18 @@ export default function RegisterPage() {
                   value={formData.password}
                   onChange={handleChange}
                 />
-                {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
+                {errors.password && (
+                  <p className="text-red-500 text-xs mt-1">{errors.password}</p>
+                )}
               </div>
 
               <div className="space-y-2">
-                <label htmlFor="confirmPassword" className="text-sm font-medium text-gray-300">Confirm Password</label>
+                <label
+                  htmlFor="confirmPassword"
+                  className="text-sm font-medium text-gray-300"
+                >
+                  Confirm Password
+                </label>
                 <Input
                   id="confirmPassword"
                   name="confirmPassword"
@@ -232,11 +268,29 @@ export default function RegisterPage() {
                   value={formData.confirmPassword}
                   onChange={handleChange}
                 />
-                {errors.confirmPassword && <p className="text-red-500 text-xs mt-1">{errors.confirmPassword}</p>}
+                {errors.confirmPassword && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.confirmPassword}
+                  </p>
+                )}
               </div>
 
               <div className="text-xs text-gray-400">
-                By signing up, you agree to our <Link href="/terms" className="text-codedex-teal hover:underline">Terms of Service</Link> and <Link href="/privacy" className="text-codedex-teal hover:underline">Privacy Policy</Link>.
+                By signing up, you agree to our{" "}
+                <Link
+                  href="/terms"
+                  className="text-codedex-teal hover:underline"
+                >
+                  Terms of Service
+                </Link>{" "}
+                and{" "}
+                <Link
+                  href="/privacy"
+                  className="text-codedex-teal hover:underline"
+                >
+                  Privacy Policy
+                </Link>
+                .
               </div>
 
               <Button
@@ -244,14 +298,14 @@ export default function RegisterPage() {
                 className="w-full bg-codedex-gold text-codedex-darkNavy hover:bg-codedex-gold/90 font-medium"
                 disabled={isLoading}
               >
-                {isLoading ? 'Creating account...' : 'Create Account'}
+                {isLoading ? "Creating account..." : "Create Account"}
               </Button>
             </form>
           </CardContent>
 
           <CardFooter className="flex justify-center border-t border-gray-800 pt-4">
             <p className="text-gray-400 text-sm">
-              Already have an account?{' '}
+              Already have an account?{" "}
               <Link href="/login" className="text-codedex-teal hover:underline">
                 Sign In
               </Link>

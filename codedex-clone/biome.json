@@ -22,7 +22,7 @@
     "rules": {
       "recommended": true,
       "correctness": {
-        "noUnusedVariables": "off"
+        "noUnusedVariables": "warn"
       },
       "nursery": {
         "noImgElement": "off"
@@ -30,19 +30,19 @@
       "a11y": {
         "noAutofocus": "off",
         "noDistractingElements": "off",
-        "noHeaderScope": "off",
+        "noHeaderScope": "warn",
         "noInteractiveElementToNoninteractiveRole": "off",
         "noLabelWithoutControl": "off",
         "noNoninteractiveElementToInteractiveRole": "off",
         "noNoninteractiveTabindex": "off",
-        "noPositiveTabindex": "off",
+        "noPositiveTabindex": "warn",
         "noRedundantAlt": "off",
-        "noRedundantRoles": "off",
+        "noRedundantRoles": "warn",
         "noSvgWithoutTitle": "off",
-        "useAltText": "off",
+        "useAltText": "warn",
         "useKeyWithClickEvents": "off",
         "useKeyWithMouseEvents": "off",
-        "useButtonType": "off"
+        "useButtonType": "warn"
       }
     }
   },

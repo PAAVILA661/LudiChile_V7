@@ -1,17 +1,16 @@
 "use client";
 
-import React, { ComponentType, useEffect } from 'react';
-import { useAuth } from '@/context/AuthContext';
-import { useRouter } from 'next/navigation';
-import { UserRole } from '@prisma/client'; // Asegúrate de que UserRole se importa correctamente
-import type { User } from '@/types/auth';
+import type React from "react";
+import { type ComponentType, useEffect } from "react";
+import { useAuth } from "@/context/AuthContext";
+import { useRouter } from "next/navigation";
+import { UserRole } from "@prisma/client"; // Asegúrate de que UserRole se importa correctamente
+import type { User } from "@/types/auth";
 
-interface WithAdminAuthProps {
-  // Puedes añadir props adicionales que el HOC podría necesitar o pasar
-}
+type WithAdminAuthProps = {};
 
 const withAdminAuth = <P extends object>(
-  WrappedComponent: ComponentType<P & { user: User }> // La página envuelta recibirá el user
+  WrappedComponent: ComponentType<P & { user: User }>, // La página envuelta recibirá el user
 ) => {
   const AdminRouteComponent: React.FC<P & WithAdminAuthProps> = (props) => {
     const { user, isAuthenticated, isLoading } = useAuth();
@@ -20,9 +19,9 @@ const withAdminAuth = <P extends object>(
     useEffect(() => {
       if (!isLoading) {
         if (!isAuthenticated) {
-          router.replace('/login?redirect=' + window.location.pathname); // Redirigir a login si no está autenticado
+          router.replace("/login?redirect=" + window.location.pathname); // Redirigir a login si no está autenticado
         } else if (user?.role !== UserRole.ADMIN) {
-          router.replace('/unauthorized'); // Redirigir a una página de no autorizado si no es ADMIN
+          router.replace("/unauthorized"); // Redirigir a una página de no autorizado si no es ADMIN
         }
       }
     }, [isLoading, isAuthenticated, user, router]);
@@ -37,7 +36,7 @@ const withAdminAuth = <P extends object>(
       );
     }
     // Si es admin, renderiza el componente envuelto pasándole el usuario
-    return <WrappedComponent {...props as P} user={user} />;
+    return <WrappedComponent {...(props as P)} user={user} />;
   };
 
   return AdminRouteComponent;

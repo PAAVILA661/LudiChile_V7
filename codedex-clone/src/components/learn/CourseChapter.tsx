@@ -1,10 +1,15 @@
 "use client";
 
-import type React from 'react';
-import { useState } from 'react';
-import Link from 'next/link';
-import { ChevronDown, ChevronUp, Lock, CheckCircle } from 'lucide-react';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import type React from "react";
+import { useState } from "react";
+import Link from "next/link";
+import { ChevronDown, ChevronUp, Lock, CheckCircle } from "lucide-react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 interface Exercise {
   number?: number;
@@ -53,17 +58,16 @@ const CourseChapter: React.FC<CourseChapterProps> = ({
   };
 
   return (
-    <div className={`bg-codedex-navy border border-codedex-gold/10 rounded-lg overflow-hidden ${isClubOnly ? 'relative' : ''}`}>
+    <div
+      className={`bg-codedex-navy border border-codedex-gold/10 rounded-lg overflow-hidden ${isClubOnly ? "relative" : ""}`}
+    >
       {isClubOnly && (
         <div className="absolute top-0 right-0 bg-codedex-gold text-codedex-darkNavy px-3 py-1 text-xs font-medium rounded-bl-lg">
           Club
         </div>
       )}
 
-      <div
-        className="p-6 cursor-pointer"
-        onClick={toggleExpand}
-      >
+      <div className="p-6 cursor-pointer" onClick={toggleExpand}>
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-4">
             <div className="bg-codedex-darkNavy w-8 h-8 rounded-full flex items-center justify-center text-codedex-gold font-pixel">
@@ -82,12 +86,15 @@ const CourseChapter: React.FC<CourseChapterProps> = ({
         <div className="border-t border-codedex-gold/10 p-4">
           <ul className="space-y-1">
             {exercises.map((exercise, index) => (
-              <li key={exercise.slug || `exercise-${index}`} className="pl-12 py-2">
+              <li
+                key={exercise.slug || `exercise-${index}`}
+                className="pl-12 py-2"
+              >
                 {exercise.isBonus || exercise.isChallenge ? (
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <div className="text-codedex-gold text-xs font-pixel">
-                        {exercise.isBonus ? 'Bonus Article' : 'Challenge Pack'}
+                        {exercise.isBonus ? "Bonus Article" : "Challenge Pack"}
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
@@ -107,7 +114,7 @@ const CourseChapter: React.FC<CourseChapterProps> = ({
                   <div className="flex items-center justify-between group">
                     <div className="flex items-center gap-3">
                       <div className="text-xs text-gray-400 w-6">
-                        {exercise.number?.toString().padStart(2, '0') || ''}
+                        {exercise.number?.toString().padStart(2, "0") || ""}
                       </div>
                       <div className="text-white group-hover:text-codedex-gold transition-colors">
                         {exercise.title}
@@ -119,7 +126,7 @@ const CourseChapter: React.FC<CourseChapterProps> = ({
                       </div>
                     ) : (
                       <Link
-                        href={exercise.slug ? `/python/${exercise.slug}` : '#'}
+                        href={exercise.slug ? `/python/${exercise.slug}` : "#"}
                         className="bg-codedex-darkNavy text-codedex-gold hover:bg-codedex-darkNavy/70 px-3 py-1 rounded-sm text-xs opacity-0 group-hover:opacity-100 transition-opacity"
                       >
                         Start
@@ -135,7 +142,10 @@ const CourseChapter: React.FC<CourseChapterProps> = ({
                 <h4 className="text-white font-medium mb-2">Requirements</h4>
                 <ul className="space-y-2">
                   {requirements.map((req) => (
-                    <li key={req.id} className="flex items-center gap-2 text-sm text-gray-400">
+                    <li
+                      key={req.id}
+                      className="flex items-center gap-2 text-sm text-gray-400"
+                    >
                       <div className="w-4 h-4 rounded-full border border-gray-500 flex items-center justify-center">
                         <div className="w-2 h-2 rounded-full bg-gray-500" />
                       </div>

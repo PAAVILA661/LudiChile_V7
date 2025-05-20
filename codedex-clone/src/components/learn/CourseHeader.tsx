@@ -1,20 +1,20 @@
-import type React from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
+import type React from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 interface CourseHeaderProps {
   title: string;
   description: string;
   image: string;
-  level: 'BEGINNER' | 'INTERMEDIATE' | 'ADVANCED';
+  level: "BEGINNER" | "INTERMEDIATE" | "ADVANCED";
 }
 
 const CourseHeader: React.FC<CourseHeaderProps> = ({
   title,
   description,
   image,
-  level
+  level,
 }) => {
   return (
     <div className="relative py-16 overflow-hidden">
@@ -46,9 +46,7 @@ const CourseHeader: React.FC<CourseHeaderProps> = ({
             {title}
           </h1>
 
-          <p className="text-xl text-gray-300 max-w-3xl mb-8">
-            {description}
-          </p>
+          <p className="text-xl text-gray-300 max-w-3xl mb-8">{description}</p>
 
           <div className="flex flex-wrap gap-4">
             <Button

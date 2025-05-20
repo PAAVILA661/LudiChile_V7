@@ -1,8 +1,8 @@
-import type React from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
+import type React from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 
 interface CourseSidebarProps {
   username: string;
@@ -28,14 +28,46 @@ const CourseSidebar: React.FC<CourseSidebarProps> = ({
   cheatSheets,
 }) => {
   const badges = [
-    { id: 'hello-world', image: 'https://ext.same-assets.com/1748103887/326291293.png', isEarned: false },
-    { id: 'variables', image: 'https://ext.same-assets.com/1748103887/3042823545.png', isEarned: false },
-    { id: 'control-flow', image: 'https://ext.same-assets.com/1748103887/3320105460.png', isEarned: false },
-    { id: 'loops', image: 'https://ext.same-assets.com/1748103887/1524852266.png', isEarned: false },
-    { id: 'lists', image: 'https://ext.same-assets.com/1748103887/1524852266.png', isEarned: false },
-    { id: 'functions', image: 'https://ext.same-assets.com/1748103887/159953230.png', isEarned: false },
-    { id: 'classes-objects', image: 'https://ext.same-assets.com/1748103887/2484803668.png', isEarned: false },
-    { id: 'modules', image: 'https://ext.same-assets.com/1748103887/159953230.png', isEarned: false },
+    {
+      id: "hello-world",
+      image: "https://ext.same-assets.com/1748103887/326291293.png",
+      isEarned: false,
+    },
+    {
+      id: "variables",
+      image: "https://ext.same-assets.com/1748103887/3042823545.png",
+      isEarned: false,
+    },
+    {
+      id: "control-flow",
+      image: "https://ext.same-assets.com/1748103887/3320105460.png",
+      isEarned: false,
+    },
+    {
+      id: "loops",
+      image: "https://ext.same-assets.com/1748103887/1524852266.png",
+      isEarned: false,
+    },
+    {
+      id: "lists",
+      image: "https://ext.same-assets.com/1748103887/1524852266.png",
+      isEarned: false,
+    },
+    {
+      id: "functions",
+      image: "https://ext.same-assets.com/1748103887/159953230.png",
+      isEarned: false,
+    },
+    {
+      id: "classes-objects",
+      image: "https://ext.same-assets.com/1748103887/2484803668.png",
+      isEarned: false,
+    },
+    {
+      id: "modules",
+      image: "https://ext.same-assets.com/1748103887/159953230.png",
+      isEarned: false,
+    },
   ];
 
   return (
@@ -70,19 +102,25 @@ const CourseSidebar: React.FC<CourseSidebarProps> = ({
           {/* Exercises */}
           <div className="flex items-center justify-between mb-3">
             <div className="text-gray-300 text-sm">Exercises</div>
-            <div className="text-gray-300 text-sm">{progress.exercises.completed} / {progress.exercises.total}</div>
+            <div className="text-gray-300 text-sm">
+              {progress.exercises.completed} / {progress.exercises.total}
+            </div>
           </div>
           <div className="w-full bg-codedex-darkNavy rounded-full h-2 mb-4">
             <div
               className="bg-codedex-teal h-2 rounded-full"
-              style={{ width: `${(progress.exercises.completed / progress.exercises.total) * 100}%` }}
+              style={{
+                width: `${(progress.exercises.completed / progress.exercises.total) * 100}%`,
+              }}
             />
           </div>
 
           {/* Projects Completed */}
           <div className="flex items-center justify-between mb-3">
             <div className="text-gray-300 text-sm">Projects Completed</div>
-            <div className="text-gray-300 text-sm">{progress.projects.completed} / {progress.projects.total}</div>
+            <div className="text-gray-300 text-sm">
+              {progress.projects.completed} / {progress.projects.total}
+            </div>
           </div>
           <div className="flex items-center gap-2 mb-4">
             <div className="w-6 h-6 bg-codedex-darkNavy rounded-full flex items-center justify-center">
@@ -106,12 +144,16 @@ const CourseSidebar: React.FC<CourseSidebarProps> = ({
           {/* XP Earned */}
           <div className="flex items-center justify-between mb-3">
             <div className="text-gray-300 text-sm">XP Earned</div>
-            <div className="text-gray-300 text-sm">{progress.xp.earned} / {progress.xp.total}</div>
+            <div className="text-gray-300 text-sm">
+              {progress.xp.earned} / {progress.xp.total}
+            </div>
           </div>
           <div className="w-full bg-codedex-darkNavy rounded-full h-2 mb-4">
             <div
               className="bg-yellow-500 h-2 rounded-full"
-              style={{ width: `${(progress.xp.earned / progress.xp.total) * 100}%` }}
+              style={{
+                width: `${(progress.xp.earned / progress.xp.total) * 100}%`,
+              }}
             />
           </div>
         </CardContent>
@@ -122,7 +164,9 @@ const CourseSidebar: React.FC<CourseSidebarProps> = ({
         <CardContent className="p-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-white font-medium">Course Badges</h3>
-            <div className="text-gray-400 text-sm">{progress.badges.earned} / {progress.badges.total}</div>
+            <div className="text-gray-400 text-sm">
+              {progress.badges.earned} / {progress.badges.total}
+            </div>
           </div>
           <p className="text-gray-400 text-sm mb-4">
             Complete a chapter to earn a badge - collect 'em all!
@@ -131,7 +175,7 @@ const CourseSidebar: React.FC<CourseSidebarProps> = ({
             {badges.map((badge) => (
               <div
                 key={badge.id}
-                className={`w-12 h-12 rounded-full overflow-hidden ${badge.isEarned ? '' : 'opacity-30 grayscale'}`}
+                className={`w-12 h-12 rounded-full overflow-hidden ${badge.isEarned ? "" : "opacity-30 grayscale"}`}
               >
                 <Image
                   src={badge.image}
