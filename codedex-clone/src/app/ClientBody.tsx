@@ -18,7 +18,10 @@ export default function ClientBody({
 
   return (
     <AuthProvider>
-      <body className="antialiased bg-codedex-darkNavy" suppressHydrationWarning>
+      <body
+        className="antialiased bg-codedex-darkNavy"
+        suppressHydrationWarning
+      >
         <Header />
         <main className="min-h-screen">{children}</main>
         <Footer />

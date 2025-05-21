@@ -1,6 +1,6 @@
-import React from 'react';
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
+import React from "react";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const HeroSection = () => {
   return (
@@ -11,7 +11,7 @@ const HeroSection = () => {
         <img
           src="https://ext.same-assets.com/1748103887/447480214.webp"
           alt="Fondo del Banner"
-          style={{ objectFit: 'cover', width: '100%', height: '100%' }} // Replicar fill y object-cover
+          style={{ objectFit: "cover", width: "100%", height: "100%" }} // Replicar fill y object-cover
         />
       </div>
 
@@ -30,7 +30,8 @@ const HeroSection = () => {
           </div>
 
           <p className="text-xl md:text-2xl text-codedex-gold max-w-2xl mx-auto mb-8 font-medium">
-            La forma más divertida y amigable para principiantes de aprender a programar.
+            La forma más divertida y amigable para principiantes de aprender a
+            programar.
           </p>
 
           <Button
@@ -40,9 +41,7 @@ const HeroSection = () => {
             <Link href="/signup">¡Comenzar!</Link>
           </Button>
 
-          <div className="mt-12 text-sm text-gray-400">
-            CON EL APOYO DE
-          </div>
+          <div className="mt-12 text-sm text-gray-400">CON EL APOYO DE</div>
 
           <div className="flex flex-wrap items-center justify-center gap-8 mt-4">
             <img

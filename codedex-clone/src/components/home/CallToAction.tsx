@@ -1,7 +1,7 @@
-import React from 'react';
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
-import Image from 'next/image';
+import React from "react";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import Image from "next/image";
 
 const CallToAction = () => {
   return (
@@ -12,7 +12,8 @@ const CallToAction = () => {
             Comienza tu aventura de programación hoy.
           </h2>
           <p className="text-white/80 mb-6">
-            Comprométete con tus metas con el Club Codedex—por tan solo $7.99/mes.
+            Comprométete con tus metas con el Club Codedex—por tan solo
+            $7.99/mes.
           </p>
           <Button
             className="bg-codedex-gold text-codedex-darkNavy hover:bg-codedex-gold/90 font-pixel"

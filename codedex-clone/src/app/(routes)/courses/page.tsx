@@ -22,8 +22,8 @@ const CoursesPage = () => {
           The Legend of Python
         </h3>
         <p className="text-gray-300 mb-8">
-          Get started with Python, a beginner-friendly programming language great
-          for learning the basics of code and analyzing data.
+          Get started with Python, a beginner-friendly programming language
+          great for learning the basics of code and analyzing data.
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -57,7 +57,8 @@ const CoursesPage = () => {
           The Origins Trilogy
         </h3>
         <p className="text-gray-300 mb-8">
-          Want to create your own website? Learn the three core technologies that make up the web.
+          Want to create your own website? Learn the three core technologies
+          that make up the web.
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -183,8 +184,8 @@ const CourseCard = ({
               difficulty === "BEGINNER"
                 ? "bg-codedex-teal"
                 : difficulty === "INTERMEDIATE"
-                ? "bg-codedex-blue"
-                : "bg-codedex-purple"
+                  ? "bg-codedex-blue"
+                  : "bg-codedex-purple"
             }`}
           >
             {difficulty}

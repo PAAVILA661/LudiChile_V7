@@ -1,6 +1,6 @@
-import type React from 'react';
-import Image from 'next/image';
-import { Card, CardContent } from '@/components/ui/card';
+import type React from "react";
+import Image from "next/image";
+import { Card, CardContent } from "@/components/ui/card";
 
 interface TestimonialCardProps {
   name: string;
@@ -17,7 +17,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
   location,
   quote,
   profileImage,
-  bgColor
+  bgColor,
 }) => {
   return (
     <Card className={`${bgColor} rounded-lg overflow-hidden border-0`}>
@@ -72,7 +72,8 @@ const TestimonialSection = () => {
       name: "Moses",
       role: "Desarrollador de Software",
       location: "Brooklyn, NY",
-      quote: "Codedex ayudó a revitalizar mi pasión por la programación después del Hackathon de Navidad. Desde entonces, me he conectado con personas que comparten intereses similares a los míos. Se siente como en casa.",
+      quote:
+        "Codedex ayudó a revitalizar mi pasión por la programación después del Hackathon de Navidad. Desde entonces, me he conectado con personas que comparten intereses similares a los míos. Se siente como en casa.",
       profileImage: "https://ext.same-assets.com/1748103887/3158667705.svg",
       bgColor: "bg-indigo-700",
     },
@@ -80,7 +81,8 @@ const TestimonialSection = () => {
       name: "Evangelene",
       role: "Ingeniera Frontend",
       location: "Singapur",
-      quote: "La comunidad de Codedex se siente como una reconfortante taza de té matcha caliente en un día lluvioso y frío. Es un espacio cálido y acogedor a pesar de nuestros diversos orígenes y comienzos.",
+      quote:
+        "La comunidad de Codedex se siente como una reconfortante taza de té matcha caliente en un día lluvioso y frío. Es un espacio cálido y acogedor a pesar de nuestros diversos orígenes y comienzos.",
       profileImage: "https://ext.same-assets.com/1748103887/3363814926.svg",
       bgColor: "bg-green-700",
     },
@@ -117,7 +119,9 @@ const TestimonialSection = () => {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           {stats.map((stat) => (
             <div key={stat.label} className="flex flex-col items-center">
-              <div className="text-4xl font-pixel text-codedex-gold mb-2">{stat.value}</div>
+              <div className="text-4xl font-pixel text-codedex-gold mb-2">
+                {stat.value}
+              </div>
               <div className="text-gray-400">{stat.label}</div>
             </div>
           ))}

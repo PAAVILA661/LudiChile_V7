@@ -31,12 +31,24 @@ export default function ProfilePage() {
   return (
     <div className="min-h-screen bg-codedex-darkNavy text-white p-8">
       <div className="codedex-container">
-        <h1 className="text-3xl font-pixel text-codedex-gold mb-6">My Profile</h1>
+        <h1 className="text-3xl font-pixel text-codedex-gold mb-6">
+          My Profile
+        </h1>
         <div className="bg-codedex-navy p-6 rounded-lg shadow-lg">
-          <p className="mb-2"><span className="font-semibold">Name:</span> {user.name || 'Not set'}</p>
-          <p className="mb-2"><span className="font-semibold">Email:</span> {user.email}</p>
-          <p className="mb-2"><span className="font-semibold">Role:</span> {user.role}</p>
-          <p className="mb-2"><span className="font-semibold">Joined:</span> {new Date(user.created_at).toLocaleDateString()}</p>
+          <p className="mb-2">
+            <span className="font-semibold">Name:</span>{" "}
+            {user.name || "Not set"}
+          </p>
+          <p className="mb-2">
+            <span className="font-semibold">Email:</span> {user.email}
+          </p>
+          <p className="mb-2">
+            <span className="font-semibold">Role:</span> {user.role}
+          </p>
+          <p className="mb-2">
+            <span className="font-semibold">Joined:</span>{" "}
+            {new Date(user.created_at).toLocaleDateString()}
+          </p>
           {/* Aquí se podrían añadir más detalles, progreso, badges, etc. */}
         </div>
       </div>

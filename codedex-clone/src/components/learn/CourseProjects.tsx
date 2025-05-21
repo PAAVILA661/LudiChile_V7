@@ -1,6 +1,6 @@
-import type React from 'react';
-import Image from 'next/image';
-import { Card, CardContent } from '@/components/ui/card';
+import type React from "react";
+import Image from "next/image";
+import { Card, CardContent } from "@/components/ui/card";
 
 interface Project {
   id: string; // ID único para cada proyecto
@@ -23,9 +23,7 @@ const CourseProjects: React.FC<CourseProjectsProps> = ({
     <Card className="bg-codedex-navy border-codedex-gold/10">
       <CardContent className="p-6">
         <h3 className="text-white font-medium mb-2">{title}</h3>
-        <p className="text-gray-400 text-sm mb-6">
-          {description}
-        </p>
+        <p className="text-gray-400 text-sm mb-6">{description}</p>
 
         <div className="space-y-3">
           {projects.map((project) => (

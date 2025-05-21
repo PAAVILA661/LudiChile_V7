@@ -1,62 +1,65 @@
-import React from 'react';
-import Link from 'next/link';
-import { ChevronDown } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import React from "react";
+import Link from "next/link";
+import { ChevronDown } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+} from "@/components/ui/dropdown-menu";
 
 const NavigationMenu = () => {
   const navItems = [
     {
-      label: 'Aprender',
+      label: "Aprender",
       dropdownItems: [
-        { label: 'Python', href: '/python' },
-        { label: 'Python Intermedio', href: '/intermediate-python' },
-        { label: 'NumPy', href: '/numpy' },
-        { label: 'SQL', href: '/sql' },
-        { label: 'IA Generativa', href: '/gen-ai' },
-        { label: 'HTML', href: '/html' },
-        { label: 'CSS', href: '/css' },
-        { label: 'JavaScript', href: '/javascript' },
-        { label: 'JavaScript Intermedio', href: '/intermediate-javascript' },
-        { label: 'React', href: '/react' },
-        { label: 'p5.js', href: '/p5js' },
-        { label: 'Node.js', href: '/nodejs' },
-        { label: 'Línea de Comandos', href: '/command-line' },
-        { label: 'Git y GitHub', href: '/git-github' },
-        { label: 'C++', href: '/cpp' },
-        { label: 'Java', href: '/java' },
+        { label: "Python", href: "/python" },
+        { label: "Python Intermedio", href: "/intermediate-python" },
+        { label: "NumPy", href: "/numpy" },
+        { label: "SQL", href: "/sql" },
+        { label: "IA Generativa", href: "/gen-ai" },
+        { label: "HTML", href: "/html" },
+        { label: "CSS", href: "/css" },
+        { label: "JavaScript", href: "/javascript" },
+        { label: "JavaScript Intermedio", href: "/intermediate-javascript" },
+        { label: "React", href: "/react" },
+        { label: "p5.js", href: "/p5js" },
+        { label: "Node.js", href: "/nodejs" },
+        { label: "Línea de Comandos", href: "/command-line" },
+        { label: "Git y GitHub", href: "/git-github" },
+        { label: "C++", href: "/cpp" },
+        { label: "Java", href: "/java" },
       ],
     },
     {
-      label: 'Practicar',
+      label: "Practicar",
       dropdownItems: [
-        { label: 'Desafíos', href: '/challenges' },
-        { label: 'Proyectos', href: '/projects' },
-        { label: '#30NochesDeCódigo', href: '/30-nites-of-code' },
+        { label: "Desafíos", href: "/challenges" },
+        { label: "Proyectos", href: "/projects" },
+        { label: "#30NochesDeCódigo", href: "/30-nites-of-code" },
       ],
     },
     {
-      label: 'Construir',
-      href: '/builds',
+      label: "Construir",
+      href: "/builds",
     },
     {
-      label: 'Comunidad',
-      href: '/community',
+      label: "Comunidad",
+      href: "/community",
       dropdownItems: [
-        { label: 'Inicio', href: '/community' },
-        { label: 'Tablas de Clasificación', href: '/community/leaderboards' },
-        { label: 'Exhibición de Proyectos', href: '/community/project-showcase' },
-        { label: 'Desafío Mensual', href: '/community/monthly-challenge' },
+        { label: "Inicio", href: "/community" },
+        { label: "Tablas de Clasificación", href: "/community/leaderboards" },
+        {
+          label: "Exhibición de Proyectos",
+          href: "/community/project-showcase",
+        },
+        { label: "Desafío Mensual", href: "/community/monthly-challenge" },
       ],
     },
     {
-      label: 'Precios',
-      href: '/pricing',
+      label: "Precios",
+      href: "/pricing",
     },
   ];
 
@@ -94,7 +97,7 @@ const NavigationMenu = () => {
             className="text-codedex-gold hover:text-white px-4 py-2"
             asChild
           >
-            <Link href={item.href || '#'}>{item.label}</Link>
+            <Link href={item.href || "#"}>{item.label}</Link>
           </Button>
         );
       })}

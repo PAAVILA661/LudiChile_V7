@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from "@prisma/client";
 
 // Declara una variable global para almacenar la instancia de PrismaClient
 declare global {
@@ -15,6 +15,6 @@ export const prisma =
 
 // En desarrollo, asigna la instancia de PrismaClient a la variable global
 // para que se reutilice entre recargas en caliente (hot-reloads).
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== "production") {
   global.prisma = prisma;
 }

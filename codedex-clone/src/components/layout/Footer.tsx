@@ -1,16 +1,22 @@
-import React from 'react';
-import Link from 'next/link';
-import Logo from './Logo';
-import { Heart } from 'lucide-react';
-import Image from 'next/image';
+import React from "react";
+import Link from "next/link";
+import Logo from "./Logo";
+import { Heart } from "lucide-react";
+import Image from "next/image";
 
-const FooterSection = ({ title, links }: { title: string; links: { label: string; href: string }[] }) => (
+const FooterSection = ({
+  title,
+  links,
+}: { title: string; links: { label: string; href: string }[] }) => (
   <div className="flex flex-col gap-2">
     <h3 className="font-bold text-white text-lg mb-2">{title}</h3>
     <ul className="space-y-2">
       {links.map((link) => (
         <li key={link.label}>
-          <Link href={link.href} className="text-gray-400 hover:text-white transition-colors">
+          <Link
+            href={link.href}
+            className="text-gray-400 hover:text-white transition-colors"
+          >
             {link.label}
           </Link>
         </li>
@@ -20,13 +26,16 @@ const FooterSection = ({ title, links }: { title: string; links: { label: string
 );
 
 const socialLinks = [
-  { icon: 'instagram', href: 'https://www.instagram.com/codedex.io' },
-  { icon: 'twitter', href: 'https://twitter.com/codedex_io' },
-  { icon: 'github', href: 'https://github.com/codedex-io' },
-  { icon: 'youtube', href: 'https://www.youtube.com/@codedex' },
-  { icon: 'linkedin', href: 'https://www.linkedin.com/company/codedex' },
-  { icon: 'tiktok', href: 'https://www.tiktok.com/@codedex.io' },
-  { icon: 'spotify', href: 'https://open.spotify.com/show/2vM9NL2O8FanNcO4Y9nuTG?si=289f0227743b45cf' },
+  { icon: "instagram", href: "https://www.instagram.com/codedex.io" },
+  { icon: "twitter", href: "https://twitter.com/codedex_io" },
+  { icon: "github", href: "https://github.com/codedex-io" },
+  { icon: "youtube", href: "https://www.youtube.com/@codedex" },
+  { icon: "linkedin", href: "https://www.linkedin.com/company/codedex" },
+  { icon: "tiktok", href: "https://www.tiktok.com/@codedex.io" },
+  {
+    icon: "spotify",
+    href: "https://open.spotify.com/show/2vM9NL2O8FanNcO4Y9nuTG?si=289f0227743b45cf",
+  },
 ];
 
 const Footer = () => {
@@ -37,7 +46,11 @@ const Footer = () => {
           <Logo size="sm" />
           <div className="flex items-center ml-auto text-sm text-gray-400">
             <span>Hecho con</span>
-            <Heart size={14} className="mx-1 text-red-500" fill="currentColor" />
+            <Heart
+              size={14}
+              className="mx-1 text-red-500"
+              fill="currentColor"
+            />
             <span>en Brooklyn, NY</span>
           </div>
         </div>
@@ -46,55 +59,61 @@ const Footer = () => {
           <FooterSection
             title="EMPRESA"
             links={[
-              { label: 'Acerca de', href: '/about' },
-              { label: 'Blog', href: '/blog' },
-              { label: 'Tienda', href: 'https://codedex.myshopify.com/' },
-              { label: 'Comunidad', href: '/community' },
-              { label: 'Centro de Ayuda', href: 'https://codedex.notion.site/Welcome-to-the-Cod-dex-Help-Center-c8afe2966ea9490d9377bce826d22eb7' },
-              { label: 'Precios', href: '/pricing' },
+              { label: "Acerca de", href: "/about" },
+              { label: "Blog", href: "/blog" },
+              { label: "Tienda", href: "https://codedex.myshopify.com/" },
+              { label: "Comunidad", href: "/community" },
+              {
+                label: "Centro de Ayuda",
+                href: "https://codedex.notion.site/Welcome-to-the-Cod-dex-Help-Center-c8afe2966ea9490d9377bce826d22eb7",
+              },
+              { label: "Precios", href: "/pricing" },
             ]}
           />
           <FooterSection
             title="PRÁCTICA"
             links={[
-              { label: 'Desafíos', href: '/challenges' },
-              { label: 'Proyectos', href: '/projects' },
-              { label: '#30NochesDeCódigo', href: '/30-nites-of-code' },
+              { label: "Desafíos", href: "/challenges" },
+              { label: "Proyectos", href: "/projects" },
+              { label: "#30NochesDeCódigo", href: "/30-nites-of-code" },
             ]}
           />
           <FooterSection
             title="APRENDER"
             links={[
-              { label: 'Todos los Cursos', href: '/courses' },
-              { label: 'Python', href: '/python' },
-              { label: 'Python Intermedio', href: '/intermediate-python' },
-              { label: 'NumPy', href: '/numpy' },
-              { label: 'SQL', href: '/sql' },
-              { label: 'HTML', href: '/html' },
-              { label: 'CSS', href: '/css' },
+              { label: "Todos los Cursos", href: "/courses" },
+              { label: "Python", href: "/python" },
+              { label: "Python Intermedio", href: "/intermediate-python" },
+              { label: "NumPy", href: "/numpy" },
+              { label: "SQL", href: "/sql" },
+              { label: "HTML", href: "/html" },
+              { label: "CSS", href: "/css" },
             ]}
           />
           <FooterSection
             title=""
             links={[
-              { label: 'JavaScript', href: '/javascript' },
-              { label: 'JavaScript Intermedio', href: '/intermediate-javascript' },
-              { label: 'React', href: '/react' },
-              { label: 'Línea de Comandos', href: '/command-line' },
-              { label: 'Git y GitHub', href: '/git-github' },
-              { label: 'p5.js', href: '/p5js' },
-              { label: 'C++', href: '/cpp' },
-              { label: 'Java', href: '/java' },
+              { label: "JavaScript", href: "/javascript" },
+              {
+                label: "JavaScript Intermedio",
+                href: "/intermediate-javascript",
+              },
+              { label: "React", href: "/react" },
+              { label: "Línea de Comandos", href: "/command-line" },
+              { label: "Git y GitHub", href: "/git-github" },
+              { label: "p5.js", href: "/p5js" },
+              { label: "C++", href: "/cpp" },
+              { label: "Java", href: "/java" },
             ]}
           />
         </div>
 
         <div className="flex flex-col md:flex-row items-center justify-between pt-8 border-t border-codedex-gold/10">
           <div className="text-sm text-gray-400 mb-4 md:mb-0">
-            © 2025 Niteowl, Inc.{' '}
+            © 2025 Niteowl, Inc.{" "}
             <Link href="/terms" className="ml-2 hover:text-white">
               Términos
-            </Link>{' '}
+            </Link>{" "}
             <Link href="/privacy" className="ml-2 hover:text-white">
               Política de Privacidad
             </Link>
@@ -118,7 +137,9 @@ const Footer = () => {
                 </div>
               </Link>
             ))}
-            <div className="text-gray-600 text-xs ml-2">¡Gana 100 XP para desbloquear!</div>
+            <div className="text-gray-600 text-xs ml-2">
+              ¡Gana 100 XP para desbloquear!
+            </div>
           </div>
         </div>
       </div>

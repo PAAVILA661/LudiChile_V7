@@ -1,7 +1,7 @@
-import type { User as PrismaUser } from '@prisma/client';
+import type { User as PrismaUser } from "@prisma/client";
 
 // Omitimos password_hash del tipo User que usamos en el frontend
-export type User = Omit<PrismaUser, 'password_hash'>;
+export type User = Omit<PrismaUser, "password_hash">;
 
 export interface AuthContextType {
   user: User | null;

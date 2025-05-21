@@ -1,7 +1,7 @@
 "use client";
 
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export default function UnauthorizedPage() {
   return (
@@ -11,7 +11,10 @@ export default function UnauthorizedPage() {
         <p className="text-lg text-gray-300 mb-8">
           You do not have permission to view this page.
         </p>
-        <Button asChild className="bg-codedex-gold text-codedex-darkNavy hover:bg-codedex-gold/90">
+        <Button
+          asChild
+          className="bg-codedex-gold text-codedex-darkNavy hover:bg-codedex-gold/90"
+        >
           <Link href="/">Go to Homepage</Link>
         </Button>
       </div>

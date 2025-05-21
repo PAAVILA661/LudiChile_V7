@@ -1,16 +1,19 @@
-import React from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
+import React from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 const TOPICS = [
   { id: "basics", text: "Fundamentals of Python syntax and basic programming" },
   { id: "conditional", text: "Working with conditional statements and loops" },
   { id: "functions", text: "Creating and using functions" },
-  { id: "data-structures", text: "Lists, dictionaries, and other data structures" },
+  {
+    id: "data-structures",
+    text: "Lists, dictionaries, and other data structures",
+  },
   { id: "oop", text: "Object-oriented programming with classes" },
   { id: "modules", text: "Working with modules and libraries" },
-  { id: "projects", text: "Building real-world projects" }
+  { id: "projects", text: "Building real-world projects" },
 ];
 
 const PythonIntroductionPage = () => {
@@ -40,7 +43,8 @@ const PythonIntroductionPage = () => {
           </h1>
 
           <p className="text-xl text-gray-300 max-w-2xl mx-auto mb-12">
-            Learn programming fundamentals with Python, the world's most popular and versatile coding language!
+            Learn programming fundamentals with Python, the world's most popular
+            and versatile coding language!
           </p>
 
           <div className="flex flex-col items-center gap-6">
@@ -51,7 +55,9 @@ const PythonIntroductionPage = () => {
             >
               <Link href="/python/01-setting-up">Start First Exercise</Link>
             </Button>
-            <p className="text-gray-400">No experience required - let's start coding!</p>
+            <p className="text-gray-400">
+              No experience required - let's start coding!
+            </p>
           </div>
         </div>
       </div>
@@ -61,25 +67,33 @@ const PythonIntroductionPage = () => {
           <div className="bg-codedex-navy p-8 rounded-lg border border-codedex-gold/10">
             <div className="text-4xl font-bold text-codedex-gold mb-4">43+</div>
             <h3 className="text-xl font-pixel text-white mb-2">Exercises</h3>
-            <p className="text-gray-300">Interactive coding exercises that teach you Python step by step</p>
+            <p className="text-gray-300">
+              Interactive coding exercises that teach you Python step by step
+            </p>
           </div>
 
           <div className="bg-codedex-navy p-8 rounded-lg border border-codedex-gold/10">
             <div className="text-4xl font-bold text-codedex-gold mb-4">11</div>
             <h3 className="text-xl font-pixel text-white mb-2">Chapters</h3>
-            <p className="text-gray-300">Structured learning path from the basics to advanced concepts</p>
+            <p className="text-gray-300">
+              Structured learning path from the basics to advanced concepts
+            </p>
           </div>
 
           <div className="bg-codedex-navy p-8 rounded-lg border border-codedex-gold/10">
             <div className="text-4xl font-bold text-codedex-gold mb-4">685</div>
             <h3 className="text-xl font-pixel text-white mb-2">XP Points</h3>
-            <p className="text-gray-300">Earn experience points as you complete exercises and projects</p>
+            <p className="text-gray-300">
+              Earn experience points as you complete exercises and projects
+            </p>
           </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
           <div>
-            <h2 className="text-3xl font-pixel text-codedex-gold mb-6">What You'll Learn</h2>
+            <h2 className="text-3xl font-pixel text-codedex-gold mb-6">
+              What You'll Learn
+            </h2>
             <ul className="space-y-4">
               {TOPICS.map((item) => (
                 <li key={item.id} className="flex items-start gap-3">
@@ -96,7 +110,7 @@ const PythonIntroductionPage = () => {
             <h3 className="text-xl font-pixel text-white mb-4">Sample Code</h3>
             <div className="bg-[#001429] p-4 rounded-md font-mono text-sm overflow-x-auto">
               <pre className="text-gray-300">
-{`# This is your first Python program
+                {`# This is your first Python program
 name = input("What is your name? ")
 
 # Greet the user
@@ -120,7 +134,9 @@ print(f"The area is {area} square units.")`}
         </div>
 
         <div className="text-center mt-16">
-          <h2 className="text-3xl font-pixel text-codedex-gold mb-8">Ready to Begin Your Journey?</h2>
+          <h2 className="text-3xl font-pixel text-codedex-gold mb-8">
+            Ready to Begin Your Journey?
+          </h2>
           <Button
             size="lg"
             className="bg-codedex-gold text-codedex-darkNavy hover:bg-codedex-gold/90 font-pixel text-lg px-8 py-6"
