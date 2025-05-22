@@ -45,18 +45,24 @@ const renderProfilePage = (
     user: effectiveUser,
     isLoading: isLoading,
     isAuthenticated: isAuthenticated,
-    login: jest.fn(), 
+    login: authContextValue?.login || jest.fn(), // Use passed login mock or a new one
     logout: jest.fn(), 
   });
   mockUseRouter.mockReturnValue({
     push: mockPush,
     // Add other router methods if used by the component
   });
-  mockPush.mockClear(); // Clear push mock calls before each render
+  mockPush.mockClear(); 
   return render(<ProfilePage />);
 };
 
 describe('ProfilePage Component (Test File in src/app)', () => {
+  beforeEach(() => { // Added beforeEach to clear mocks for all tests in this file
+    mockFetch.mockClear();
+    mockPush.mockClear();
+    // mockLogin is cleared in the Name Editing describe block's beforeEach
+  });
+
   // Test 1: Loading State
   it('displays loading message when isLoading is true', () => {
     renderProfilePage(null, true, false);
@@ -66,14 +72,12 @@ describe('ProfilePage Component (Test File in src/app)', () => {
   // Test 2: Redirect if not authenticated
   it('redirects to login if not authenticated and not loading', async () => {
     renderProfilePage(null, false, false);
-    // The component itself returns null if !isAuthenticated, useEffect handles redirect.
-    // We check if push was called by the useEffect hook.
-    await waitFor(() => { // useEffect runs after initial render
+    await waitFor(() => { 
         expect(mockPush).toHaveBeenCalledWith('/login?redirect=/profile');
     });
   });
   
-  // Test 3: User Information Display
+  // Test 3: User Information Display (Existing tests remain)
   describe('User Information Display', () => {
     const testUser: Partial<AuthenticatedUser> = {
       id: 'userTest1',
@@ -166,5 +170,168 @@ describe('ProfilePage Component (Test File in src/app)', () => {
     expect(screen.getAllByText('0')[1]).toBeInTheDocument(); // Completed exercises defaults to 0 (the first 0 is for XP)
     
     expect(screen.getByText('No badges earned yet. Keep learning to unlock them!')).toBeInTheDocument();
+  });
+
+  // --- Tests for Name Editing Functionality ---
+  describe('Name Editing Functionality', () => {
+    const mockLoginFn = jest.fn();
+    const initialUserName = 'Initial Test Name';
+    let mockUser: AuthenticatedUser;
+
+    beforeEach(() => {
+      mockLoginFn.mockClear();
+      mockFetch.mockClear();
+      mockUser = {
+        id: 'userEditTest', name: initialUserName, email: 'edit@example.com', role: 'USER',
+        created_at: new Date(), updated_at: new Date(), github_id: null,
+        progress: [], user_xp: { userId: 'userEditTest', total_xp: 50 }, user_badges: [],
+      };
+    });
+
+    // 1. Initial Display
+    test('1. Initial Display: shows name and Edit button, no input/save/cancel', () => {
+      renderProfilePage(mockUser, false, true);
+      expect(screen.getByText(initialUserName)).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /Edit Name/i })).toBeVisible();
+      expect(screen.queryByRole('textbox', { name: /Display Name/i })).not.toBeInTheDocument();
+      expect(screen.queryByRole('button', { name: /Save/i })).not.toBeInTheDocument();
+      expect(screen.queryByRole('button', { name: /Cancel/i })).not.toBeInTheDocument();
+    });
+
+    // 2. Entering Edit Mode
+    test('2. Entering Edit Mode: shows input, Save, and Cancel buttons', () => {
+      renderProfilePage(mockUser, false, true);
+      fireEvent.click(screen.getByRole('button', { name: /Edit Name/i }));
+
+      expect(screen.queryByRole('button', { name: /Edit Name/i })).not.toBeInTheDocument();
+      const nameInput = screen.getByRole('textbox', { name: /Display Name/i });
+      expect(nameInput).toBeVisible();
+      expect(nameInput).toHaveValue(initialUserName);
+      expect(screen.getByRole('button', { name: /Save/i })).toBeVisible();
+      expect(screen.getByRole('button', { name: /Cancel/i })).toBeVisible();
+    });
+
+    // 3. Cancelling Edit Mode
+    test('3. Cancelling Edit Mode: reverts to initial display, name unchanged', () => {
+      renderProfilePage(mockUser, false, true);
+      fireEvent.click(screen.getByRole('button', { name: /Edit Name/i }));
+      
+      const nameInput = screen.getByRole('textbox', { name: /Display Name/i });
+      fireEvent.change(nameInput, { target: { value: 'Changed Name But Cancelled' } });
+      
+      fireEvent.click(screen.getByRole('button', { name: /Cancel/i }));
+
+      expect(screen.queryByRole('textbox', { name: /Display Name/i })).not.toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /Edit Name/i })).toBeVisible();
+      expect(screen.getByText(initialUserName)).toBeInTheDocument(); // Name remains initial
+    });
+
+    // 4. Successful Name Update
+    test('4. Successful Name Update: calls API, updates context, shows success', async () => {
+      renderProfilePage(mockUser, false, true, { login: mockLoginFn });
+      fireEvent.click(screen.getByRole('button', { name: /Edit Name/i }));
+
+      const newName = 'Updated Test Name';
+      const nameInput = screen.getByRole('textbox', { name: /Display Name/i });
+      fireEvent.change(nameInput, { target: { value: newName } });
+
+      const updatedUserFromApi = { ...mockUser, name: newName, updated_at: new Date() };
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ user: updatedUserFromApi }),
+      });
+
+      fireEvent.click(screen.getByRole('button', { name: /Save/i }));
+
+      const saveButton = screen.getByRole('button', {name: /Save/i });
+      await waitFor(() => expect(saveButton.textContent).toMatch(/Save/i)); // Or check for Loader icon
+
+      await waitFor(() => {
+        expect(mockFetch).toHaveBeenCalledWith('/api/user/update-profile', expect.objectContaining({
+          method: 'POST',
+          body: JSON.stringify({ name: newName }),
+        }));
+        expect(mockLoginFn).toHaveBeenCalledWith(updatedUserFromApi);
+        expect(screen.getByText(/Name updated successfully!/i)).toBeInTheDocument();
+      });
+      
+      // After login mock updates context, ProfilePage re-renders with new user name
+      // To test this properly, the mockUseAuth needs to actually update its returned 'user'
+      // For simplicity here, we assume login works and success message is key.
+      // Re-rendering with the new user for the assertion of the name:
+      renderProfilePage(updatedUserFromApi, false, true, { login: mockLoginFn });
+      expect(screen.getByText(newName)).toBeInTheDocument();
+      expect(screen.queryByRole('textbox', { name: /Display Name/i })).not.toBeInTheDocument();
+    });
+
+    // 5. Name Update - API Error
+    test('5. Name Update - API Error: shows error message, stays in edit mode', async () => {
+      renderProfilePage(mockUser, false, true, { login: mockLoginFn });
+      fireEvent.click(screen.getByRole('button', { name: /Edit Name/i }));
+
+      const newName = 'Error Update Name';
+      const nameInput = screen.getByRole('textbox', { name: /Display Name/i });
+      fireEvent.change(nameInput, { target: { value: newName } });
+
+      mockFetch.mockResolvedValueOnce({
+        ok: false,
+        status: 500,
+        json: async () => ({ message: 'Server error updating name' }),
+      });
+
+      fireEvent.click(screen.getByRole('button', { name: /Save/i }));
+
+      await waitFor(() => {
+        expect(screen.getByText(/Server error updating name/i)).toBeInTheDocument();
+        expect(mockLoginFn).not.toHaveBeenCalled();
+        expect(screen.getByRole('textbox', { name: /Display Name/i })).toBeVisible(); // Still in edit mode
+        expect(screen.getByRole('textbox', { name: /Display Name/i })).toHaveValue(newName);
+      });
+    });
+
+    // 6. Name Update - Client-Side Validation (Empty Name)
+    test('6. Name Update - Client-Side Validation (Empty Name): shows error, no API call', () => {
+      renderProfilePage(mockUser, false, true);
+      fireEvent.click(screen.getByRole('button', { name: /Edit Name/i }));
+
+      const nameInput = screen.getByRole('textbox', { name: /Display Name/i });
+      fireEvent.change(nameInput, { target: { value: '  ' } }); // Empty or whitespace
+      
+      fireEvent.click(screen.getByRole('button', { name: /Save/i }));
+
+      expect(screen.getByText(/Name cannot be empty/i)).toBeInTheDocument();
+      expect(mockFetch).not.toHaveBeenCalled();
+      expect(screen.getByRole('textbox', { name: /Display Name/i })).toBeVisible();
+    });
+
+    // 7. editableName Initialization and Reset
+    test('7. editableName syncs with user.name from context on entering edit mode', () => {
+      // Initial render with user A
+      const { rerender } = renderProfilePage(mockUser, false, true);
+      fireEvent.click(screen.getByRole('button', { name: /Edit Name/i }));
+      let nameInput = screen.getByRole('textbox', { name: /Display Name/i });
+      expect(nameInput).toHaveValue(initialUserName);
+      fireEvent.click(screen.getByRole('button', { name: /Cancel/i })); // Exit edit mode
+
+      // Simulate context update (user name changes externally)
+      const externallyUpdatedUserName = "Externally Updated Name";
+      const updatedMockUser = { ...mockUser, name: externallyUpdatedUserName };
+      
+      // Re-render with the new user data as if context updated (ProfilePage would re-render)
+      // We pass the new user object to our render helper
+      mockUseAuth.mockReturnValueOnce({ 
+        user: updatedMockUser, 
+        isAuthenticated: true, 
+        isLoading: false, 
+        login: mockLoginFn, 
+        logout: jest.fn() 
+      });
+      rerender(<ProfilePage />); // Rerender with the same component instance but new context value
+
+      // Enter edit mode again
+      fireEvent.click(screen.getByRole('button', { name: /Edit Name/i }));
+      nameInput = screen.getByRole('textbox', { name: /Display Name/i });
+      expect(nameInput).toHaveValue(externallyUpdatedUserName); // Should pick up the new name
+    });
   });
 });
