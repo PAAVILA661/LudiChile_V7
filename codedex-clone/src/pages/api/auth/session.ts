@@ -1,13 +1,17 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import jwt from 'jsonwebtoken';
 import { prisma } from '@/lib/prisma';
-import type { User as PrismaUser } from '@prisma/client';
+import type { User as PrismaUser, Progress, UserBadge, UserXP, Exercise, Badge } from '@prisma/client';
 
 const JWT_SECRET = process.env.JWT_SECRET;
 const COOKIE_NAME = 'codedex_session_token';
 
 // Omitimos password_hash del tipo User que usamos en el frontend
-export type AuthenticatedUser = Omit<PrismaUser, 'password_hash'>;
+export type AuthenticatedUser = Omit<PrismaUser, 'password_hash'> & {
+  progress: (Progress & { exercise: Pick<Exercise, 'id' | 'slug'> })[];
+  user_badges: (UserBadge & { badge: Pick<Badge, 'name' | 'image_url'> })[];
+  user_xp: Pick<UserXP, 'total_xp'> | null; // UserXP could be null if no XP record yet
+};
 
 interface JwtPayload {
   userId: string;
@@ -41,25 +45,53 @@ export default async function handler(
   try {
     const decoded = jwt.verify(token, JWT_SECRET) as JwtPayload;
 
-    // Opcional: Podrías volver a buscar al usuario en la BD para asegurar que aún existe y está activo
-    // Por ahora, confiamos en los datos del token si el token es válido.
-    // const user = await prisma.user.findUnique({ where: { id: decoded.userId } });
-    // if (!user) return res.status(401).json({ message: 'User not found', user: null });
-    // const { password_hash, ...userToReturn } = user;
+    const user = await prisma.user.findUnique({
+      where: { id: decoded.userId },
+      include: {
+        progress: {
+          include: {
+            exercise: {
+              select: { id: true, slug: true },
+            },
+          },
+        },
+        user_badges: {
+          include: {
+            badge: {
+              select: { name: true, image_url: true },
+            },
+          },
+        },
+        user_xp: {
+          select: { total_xp: true },
+        },
+      },
+    });
 
-    const userFromToken: AuthenticatedUser = {
-        id: decoded.userId,
-        email: decoded.email,
-        role: decoded.role as PrismaUser['role'], // Asegurar que el tipo coincida con el enum de Prisma
-        name: decoded.name || null, // name es opcional
-        // Los siguientes campos no están en el token, pero son parte del tipo User de Prisma
-        // Se pueden dejar como null/undefined o no incluirlos si el tipo User en el frontend los maneja como opcionales
-        github_id: null, // No está en el payload del token, necesitaría consulta a BD si se requiere
-        created_at: new Date(decoded.iat * 1000), // Aproximación, iat es issued at
-        updated_at: new Date(), // No se puede obtener del token directamente
+    if (!user) {
+      // This case should ideally not happen if JWT is valid and user existed at token creation
+      // But good to handle as a safeguard
+      return res.status(404).json({ message: 'User not found', user: null });
+    }
+
+    const { password_hash, ...userToReturn } = user;
+
+    // Ensure the returned user matches the AuthenticatedUser type structure
+    // Most fields are directly from the 'user' object after omitting password_hash.
+    // Prisma's include will structure 'progress', 'user_badges', and 'user_xp' as needed.
+    // We might need to adjust if Prisma's return type for includes doesn't perfectly match AuthenticatedUser
+    const authenticatedUserData: AuthenticatedUser = {
+      ...userToReturn,
+      // Ensure role is correctly typed if it's an enum
+      role: userToReturn.role as PrismaUser['role'],
+      // progress, user_badges, and user_xp should be correctly typed by Prisma's include
+      // and match the AuthenticatedUser definition.
+      // If user_xp can be null from the DB query (e.g. no UserXP record),
+      // ensure AuthenticatedUser or the handling accommodates this.
+      // Prisma returns `null` for a to-one relation if it doesn't exist, which matches our type for user_xp.
     };
 
-    return res.status(200).json({ user: userFromToken });
+    return res.status(200).json({ user: authenticatedUserData });
 
   } catch (error) {
     console.error('Session check error:', error);
