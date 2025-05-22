@@ -26,3 +26,6 @@ Para configurar y ejecutar los proyectos individuales, navega a sus respectivos 
 ## Contribución
 
 Consulta los archivos `README.md` de cada subproyecto para obtener información sobre cómo contribuir.
+
+
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/PAAVILA661/LudiChile_V7)
